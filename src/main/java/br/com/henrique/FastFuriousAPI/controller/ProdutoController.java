@@ -7,6 +7,7 @@ package br.com.henrique.FastFuriousAPI.controller;
 import br.com.henrique.FastFuriousAPI.domain.model.Produto;
 import br.com.henrique.FastFuriousAPI.domain.repository.ProdutoRepository;
 import br.com.henrique.FastFuriousAPI.domain.service.ProdutoService;
+import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,12 +35,12 @@ public class ProdutoController {
     
     @GetMapping
     public List<Produto> listarTodos() {
-        return produtoRepository.findAll();
+        return produtoService.listarTodos();
     }
     
     @GetMapping("/{id}")
     public Optional<Produto> buscarPorId(@PathVariable Integer id) {
-        return produtoRepository.findById(id);
+        return produtoService.buscarPorId(id);
     }
     
     @GetMapping("/cat/{categoria}")
@@ -48,18 +49,18 @@ public class ProdutoController {
     }
     
     @PostMapping
-    public Produto criarProduto(@RequestBody Produto produtoNovo) {
+    public Produto criarProduto(@Valid @RequestBody Produto produtoNovo) {
         return produtoService.salvarProduto(produtoNovo);
     }
     
     @PutMapping("/{id}")
-    public Produto atualizarProduto(@PathVariable Integer id, @RequestBody Produto produtoAtualizado) {
-        produtoAtualizado.setId(id); // Garante que vamos atualizar o produto certo
-        return produtoRepository.save(produtoAtualizado);
+    public Produto atualizarProduto(@PathVariable Integer id, @Valid @RequestBody Produto produtoAtualizado) {
+        produtoAtualizado.setId(id);
+        return produtoService.atualizaProduto(produtoAtualizado, id);
     }
     
     @DeleteMapping("/{id}")
     public void deletarProduto(@PathVariable Integer id) {
-        produtoRepository.deleteById(id);
+        produtoService.deletaProduto(id);
     }
 }

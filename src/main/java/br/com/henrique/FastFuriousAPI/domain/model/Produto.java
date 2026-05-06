@@ -5,9 +5,14 @@
 package br.com.henrique.FastFuriousAPI.domain.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import java.math.BigDecimal;
 import java.util.Objects;
 
@@ -17,29 +22,30 @@ import java.util.Objects;
  */
 @Entity
 public class Produto {
+
     @Id
+    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-   
+    
+    @NotBlank
     private String nome;
+    
+    @NotNull
+    @Positive(message = "O preço do produto deve ser maior que zero!")
     private BigDecimal preco;
-    private String categoria;
+    
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private Categoria categoria;
 
     public Produto() {
     }
 
-    public Produto(Integer id, String nome, BigDecimal preco, String categoria) {
+    public Produto(Integer id, String nome, BigDecimal preco, Categoria categoria) {
         this.id = id;
         this.nome = nome;
         this.preco = preco;
-        this.categoria = categoria;
-    }
-
-    public String getCategoria() {
-        return categoria;
-    }
-
-    public void setCategoria(String categoria) {
         this.categoria = categoria;
     }
 
@@ -88,5 +94,13 @@ public class Produto {
         final Produto other = (Produto) obj;
         return Objects.equals(this.id, other.id);
     }
-    
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
+
 }
