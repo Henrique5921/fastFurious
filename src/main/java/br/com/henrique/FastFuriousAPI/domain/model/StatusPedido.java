@@ -8,9 +8,9 @@ package br.com.henrique.FastFuriousAPI.domain.model;
  *
  * @author sesi3dia
  */
-public enum Categoria {
-    LANCHE,
-    BEBIDA,
-    ACOMPANHAMENTO,
-    SOBREMESA
+public enum StatusPedido {
+    ABERTO,
+    PRONTO,
+    ENTREGUE,
+    CANCELADO;
 }

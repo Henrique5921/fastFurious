@@ -4,15 +4,17 @@
  */
 package br.com.henrique.FastFuriousAPI.domain.repository;
 
-import br.com.henrique.FastFuriousAPI.domain.model.Categoria;
-import br.com.henrique.FastFuriousAPI.domain.model.Produto;
+import br.com.henrique.FastFuriousAPI.domain.model.Pedido;
+import br.com.henrique.FastFuriousAPI.domain.model.StatusPedido;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author sesi3dia
  */
-public interface ProdutoRepository extends JpaRepository<Produto, Integer> {
-    List<Produto> findByCategoria(Categoria categoria);
+@Repository
+public interface PedidoRepository extends JpaRepository<Pedido, Long> {
+    List<Pedido> findByStatus(StatusPedido status);
 }
